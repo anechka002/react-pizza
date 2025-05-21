@@ -1,17 +1,16 @@
-import type { PizzasType } from "@/types/types";
-import { useState } from "react"
+import type { PizzasType } from '@/types/types';
+import { useState } from 'react';
 
 type Props = {
-  pizza: PizzasType
-}
+  pizza: PizzasType;
+};
 
-export const PizzaBlock = ({pizza}: Props) => {
-  const {title, price, imageUrl, sizes, types, category} = pizza;
+export const PizzaBlock = ({ pizza }: Props) => {
+  const { title, price, imageUrl, sizes, types, category } = pizza;
 
-  const typeName = ['тонкое', 'традиционное']
-  const [activeType, setActiveType] = useState(0)
-  const [activeSize, setActiveSize] = useState(0)
-
+  const typeName = ['тонкое', 'традиционное'];
+  const [activeType, setActiveType] = useState(0);
+  const [activeSize, setActiveSize] = useState(0);
 
   return (
     <div className="pizza-block">
@@ -24,10 +23,26 @@ export const PizzaBlock = ({pizza}: Props) => {
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {types.map((type) => <li key={type} onClick={() => setActiveType(type)} className={activeType === type ? "active" : ''}>{typeName[type]}</li>)}
+          {types.map((type) => (
+            <li
+              key={type}
+              onClick={() => setActiveType(type)}
+              className={activeType === type ? 'active' : ''}
+            >
+              {typeName[type]}
+            </li>
+          ))}
         </ul>
         <ul>
-          {sizes.map((size, index) => <li key={index} onClick={() => setActiveSize(index)} className={activeSize === index ? "active" : ''}>{size} см.</li>)}
+          {sizes.map((size, index) => (
+            <li
+              key={size}
+              onClick={() => setActiveSize(index)}
+              className={activeSize === index ? 'active' : ''}
+            >
+              {size} см.
+            </li>
+          ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
