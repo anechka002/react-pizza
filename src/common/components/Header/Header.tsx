@@ -10,7 +10,7 @@ export const Header = () => {
           <Link to={PATH.HOME}>
             <img width="38" src={logoSvg} alt="Pizza logo" />
           </Link>         
-          <div>
+          <div className="header__logo-text">
             <h1>React Pizza</h1>
             <p>самая вкусная пицца во вселенной</p>
           </div>

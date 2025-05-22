@@ -15,6 +15,7 @@ export const Home = () => {
           setItems(response.data);
           setIsLoading(false);
         });
+      window.scrollTo(0, 0)
     }, []);
     
   return (
