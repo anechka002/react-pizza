@@ -17,7 +17,6 @@ export const PizzaBlock = ({ pizza }: Props) => {
       <img
         className="pizza-block__image"
         src={imageUrl}
-        // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEKwylsu12ybG9pIMs_6i-JMrlE4oqPcRaoQ&s"
         alt="Pizza"
       />
       <h4 className="pizza-block__title">{title}</h4>
