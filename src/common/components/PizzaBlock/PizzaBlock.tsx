@@ -1,4 +1,4 @@
-import type { PizzasType } from '@/types/types';
+import type { PizzasType } from '@/common/types/types';
 import { useState } from 'react';
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const PizzaBlock = ({ pizza }: Props) => {
-  const { title, price, imageUrl, sizes, types, category } = pizza;
+  const { title, price, imageUrl, sizes, types } = pizza;
 
   const typeName = ['тонкое', 'традиционное'];
   const [activeType, setActiveType] = useState(0);
@@ -14,11 +14,7 @@ export const PizzaBlock = ({ pizza }: Props) => {
 
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src={imageUrl}
-        alt="Pizza"
-      />
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
