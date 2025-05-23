@@ -8,3 +8,8 @@ export type PizzasType = {
   category: number;
   rating: number;
 }
+
+export type SortType = {
+  name: string
+  sortProperty: 'rating' | 'price' | 'title' | '-rating' | '-price' | '-title'
+}

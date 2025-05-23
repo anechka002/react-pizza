@@ -1,8 +1,10 @@
-import React from 'react';
+type Props = {
+  value: number;
+  onClickCategory: (index: number) => void
+}
 
-export const Categories = () => {
-  const [activeIndex, setActiveIndex] = React.useState<number>(0);
-
+export const Categories = ({value, onClickCategory}: Props) => {
+  
   const categories = [
     'Все',
     'Мясные',
@@ -12,8 +14,8 @@ export const Categories = () => {
     'Закрытые',
   ];
 
-  const handleOnClickCategories = (activeIndex: number) => {
-    setActiveIndex(activeIndex);
+  const handleOnClickCategories = (index: number) => {
+    onClickCategory(index);
   };
 
   return (
@@ -23,7 +25,7 @@ export const Categories = () => {
           <li
             key={category}
             onClick={() => handleOnClickCategories(index)}
-            className={activeIndex === index ? 'active' : ''}
+            className={value === index ? 'active' : ''}
           >
             {category}
           </li>
