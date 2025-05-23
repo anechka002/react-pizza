@@ -1,8 +1,14 @@
 import { Link } from 'react-router';
 import logoSvg from '../../../assets/img/pizza-logo.svg'
 import { PATH } from '@/common/routing/Routing';
+import { Search } from '../Search/Search';
 
-export const Header = () => {
+type Props = {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+};
+
+export const Header = ({ searchValue, setSearchValue }: Props) => {
   return (
     <div className="header">
       <div className="container">
@@ -15,6 +21,7 @@ export const Header = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </div>
+        <Search searchValue={searchValue} setSearchValue={setSearchValue}/>
         <div className="header__cart">
           <Link to={PATH.CART} className="button button--cart">
             <span>520 ₽</span>

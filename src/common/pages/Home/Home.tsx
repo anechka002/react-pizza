@@ -3,24 +3,34 @@ import type { PizzasType, SortType } from "@/common/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export const Home = () => {
+type Props = {
+  searchValue: string
+}
+
+export const Home = ({searchValue}: Props) => {
   const [items, setItems] = useState<PizzasType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [categoryId, setCategoryId] = useState<number>(0);
   const [sortType, setSortType] = useState<SortType>({name: 'популярности', sortProperty: 'rating'})
 
-  console.log(categoryId, sortType)
-
   useEffect(() => {
     setIsLoading(true);
       axios
-        .get(`https://682df928746f8ca4a47b67c3.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortType.sortProperty}&order=desc`)
+        .get(`https://682df928746f8ca4a47b67c3.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortType.sortProperty}&order=desc${searchValue ? `&search=${searchValue}` : ''}`)
         .then((response) => {
           setItems(response.data);
           setIsLoading(false);
         });
       window.scrollTo(0, 0)
-    }, [categoryId, sortType]);
+  }, [categoryId, sortType, searchValue]);
+
+  // сортировка при статичном массиве
+  // const pizzas = items?.filter((obj) => {
+  //   if(obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
+  //     return true
+  //   }
+  //   return false
+  // }).map((item) => <PizzaBlock key={item.id} pizza={item} />)
     
   return (
     <>
