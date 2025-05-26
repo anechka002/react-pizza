@@ -7,14 +7,10 @@ export const PATH = {
   NOTFOUND: '*',
 } as const
 
-type Props = {
-  searchValue: string
-}
-
-export const Routing = ({searchValue}: Props) => {
+export const Routing = () => {
   return (
     <Routes>
-      <Route path={PATH.HOME} element={<Home searchValue={searchValue} />} />
+      <Route path={PATH.HOME} element={<Home/>} />
       <Route path={PATH.CART} element={<Cart />} />
       <Route path={PATH.NOTFOUND} element={<NotFound />} />
     </Routes>

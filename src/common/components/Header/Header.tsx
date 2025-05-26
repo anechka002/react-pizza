@@ -3,12 +3,7 @@ import logoSvg from '../../../assets/img/pizza-logo.svg'
 import { PATH } from '@/common/routing/Routing';
 import { Search } from '../Search/Search';
 
-type Props = {
-  searchValue: string;
-  setSearchValue: (value: string) => void;
-};
-
-export const Header = ({ searchValue, setSearchValue }: Props) => {
+export const Header = () => {
   return (
     <div className="header">
       <div className="container">
@@ -21,7 +16,7 @@ export const Header = ({ searchValue, setSearchValue }: Props) => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </div>
-        <Search searchValue={searchValue} setSearchValue={setSearchValue}/>
+        <Search/>
         <div className="header__cart">
           <Link to={PATH.CART} className="button button--cart">
             <span>520 ₽</span>

@@ -1,13 +1,11 @@
+import { SearchContext } from "@/app/App";
 import { Categories, Pagination, PizzaBlock, PizzaSkeleton, Sort } from "@/common/components";
 import type { PizzasType, SortType } from "@/common/types";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
-type Props = {
-  searchValue: string
-}
-
-export const Home = ({searchValue}: Props) => {
+export const Home = () => {
+  const {searchValue} = useContext(SearchContext)
   const [items, setItems] = useState<PizzasType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -17,7 +15,7 @@ export const Home = ({searchValue}: Props) => {
   useEffect(() => {
     setIsLoading(true);
       axios
-        .get(`https://682df928746f8ca4a47b67c3.mockapi.io/items?page=${currentPage}&limit=4${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortType.sortProperty}&order=desc${searchValue ? `&search=${searchValue}` : ''}`)
+        .get(`https://682df928746f8ca4a47b67c3.mockapi.io/items?page=${currentPage}&limit=4${categoryId > 0 ? `&category=${categoryId}` : ''}&sortBy=${sortType.sortProperty}&order=desc${searchValue ? `&search=${searchValue}` : ''}`)
         .then((response) => {
           setItems(response.data);
           setIsLoading(false);

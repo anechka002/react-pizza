@@ -1,13 +1,13 @@
 import s from './Search.module.scss';
 import searchSvg from '../../../assets/img/search.svg';
 import clearIconSvg from '../../../assets/img/close.svg';
+import { useContext } from 'react';
+import { SearchContext } from '@/app/App';
 
-type Props = {
-  searchValue: string;
-  setSearchValue: (value: string) => void;
-};
 
-export const Search = ({ searchValue, setSearchValue }: Props) => {
+export const Search = () => {
+
+  const { searchValue, setSearchValue } = useContext(SearchContext)
   
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
