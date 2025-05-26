@@ -1,23 +1,26 @@
+import { setSort } from '@/app/redux/slices/filterSlice';
+import { useAppDispatch } from '@/common/hooks';
 import type { SortType } from '@/common/types';
 import React from 'react'
 
 type Props = {
   value: SortType
-  onChangeSort: (value: SortType) => void
 }
 
-export const Sort = ({value, onChangeSort}: Props) => {
+const list: SortType[] = [
+  {name: 'популярности', sortProperty: 'rating'},
+  {name: 'цене', sortProperty: 'price'},
+  {name: 'алфавиту', sortProperty: 'title'},
+]
+
+export const Sort = ({value}: Props) => {
 
   const [isOpenPopup, setIsOpenPopup] = React.useState(false)
 
-  const list: SortType[] = [
-    {name: 'популярности', sortProperty: 'rating'},
-    {name: 'цене', sortProperty: 'price'},
-    {name: 'алфавиту', sortProperty: 'title'},
-  ]
+  const dispatch = useAppDispatch()
 
   const handleSelectedItem = (value: SortType) => {
-    onChangeSort(value)
+    dispatch(setSort(value))
     setIsOpenPopup(false)
   }
 

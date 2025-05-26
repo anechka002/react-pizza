@@ -1,6 +1,8 @@
 import { SearchContext } from "@/app/App";
+import { selectCategoryId, selectSort } from "@/app/redux/slices/filterSlice";
 import { Categories, Pagination, PizzaBlock, PizzaSkeleton, Sort } from "@/common/components";
-import type { PizzasType, SortType } from "@/common/types";
+import { useAppSelector } from "@/common/hooks";
+import type { PizzasType } from "@/common/types";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 
@@ -9,8 +11,9 @@ export const Home = () => {
   const [items, setItems] = useState<PizzasType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [categoryId, setCategoryId] = useState<number>(0);
-  const [sortType, setSortType] = useState<SortType>({name: 'популярности', sortProperty: 'rating'})
+
+  const categoryId = useAppSelector(selectCategoryId)
+  const sortType = useAppSelector(selectSort)
 
   useEffect(() => {
     setIsLoading(true);
@@ -22,21 +25,13 @@ export const Home = () => {
         });
       window.scrollTo(0, 0)
   }, [categoryId, sortType, searchValue, currentPage]);
-
-  // сортировка при статичном массиве
-  // const pizzas = items?.filter((obj) => {
-  //   if(obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
-  //     return true
-  //   }
-  //   return false
-  // }).map((item) => <PizzaBlock key={item.id} pizza={item} />)
     
   return (
     <>
       <div className="content__top">
-        <Categories value={categoryId} onClickCategory={setCategoryId}/>
+        <Categories value={categoryId}/>
 
-        <Sort value={sortType} onChangeSort={setSortType}/>
+        <Sort value={sortType}/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

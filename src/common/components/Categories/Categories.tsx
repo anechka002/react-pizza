@@ -1,9 +1,11 @@
+import { setCategoryId } from "@/app/redux/slices/filterSlice";
+import { useAppDispatch } from "@/common/hooks";
+
 type Props = {
   value: number;
-  onClickCategory: (index: number) => void
 }
 
-export const Categories = ({value, onClickCategory}: Props) => {
+export const Categories = ({value}: Props) => {
   
   const categories = [
     'Все',
@@ -14,8 +16,10 @@ export const Categories = ({value, onClickCategory}: Props) => {
     'Закрытые',
   ];
 
-  const handleOnClickCategories = (index: number) => {
-    onClickCategory(index);
+  const dispatch = useAppDispatch()
+
+  const handleOnClickCategories = (id: number) => {
+    dispatch(setCategoryId({id}))
   };
 
   return (
