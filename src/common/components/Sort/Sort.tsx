@@ -1,7 +1,7 @@
 import { setSort } from '@/app/redux/slices/filterSlice';
 import { useAppDispatch } from '@/common/hooks';
 import type { SortType } from '@/common/types';
-import React from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type Props = {
   value: SortType
@@ -17,8 +17,25 @@ export const sortList: SortType[] = [
 ]
 
 export const Sort = ({value}: Props) => {
+  const [isOpenPopup, setIsOpenPopup] = useState(false)
+  const sortRef = useRef<HTMLDivElement>(null)
 
-  const [isOpenPopup, setIsOpenPopup] = React.useState(false)
+  useEffect(() => {
+    // console.log('mount')
+    const handleOutsideClick = (event: MouseEvent) => {
+      if(sortRef.current && !event.composedPath().includes(sortRef.current as EventTarget)) {
+        setIsOpenPopup(false)
+        // console.log('click outside')
+      }
+    }
+    document.body.addEventListener('click', handleOutsideClick)
+
+    // Очистка эффекта
+    return () => {
+      // console.log('sort unmount')
+      document.body.removeEventListener('click', handleOutsideClick);
+    };
+  }, [])
 
   const dispatch = useAppDispatch()
 
@@ -28,7 +45,7 @@ export const Sort = ({value}: Props) => {
   }
 
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
