@@ -1,4 +1,4 @@
-import { selectCategoryId, selectSearch, selectSort } from "@/app/redux/slices/filterSlice";
+import { selectCategoryId, selectCurrentPage, selectSearch, selectSort } from "@/app/redux/slices/filterSlice";
 import { Categories, Pagination, PizzaBlock, PizzaSkeleton, Sort } from "@/common/components";
 import { useAppSelector } from "@/common/hooks";
 import type { PizzasType } from "@/common/types";
@@ -9,11 +9,11 @@ export const Home = () => {
 
   const [items, setItems] = useState<PizzasType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [currentPage, setCurrentPage] = useState<number>(1)
 
   const categoryId = useAppSelector(selectCategoryId)
   const sortType = useAppSelector(selectSort)
   const searchValue = useAppSelector(selectSearch)
+  const currentPage = useAppSelector(selectCurrentPage)
 
   useEffect(() => {
     setIsLoading(true);
@@ -53,7 +53,7 @@ export const Home = () => {
           : items?.map((item) => <PizzaBlock key={item.id} pizza={item} />)}
       </div>
 
-      <Pagination onChangePage={setCurrentPage}/>
+      <Pagination currentPage={currentPage}/>
     </>
   );
 };
