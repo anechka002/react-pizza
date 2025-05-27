@@ -4,21 +4,21 @@ import { Routing } from '@/common/routing';
 import { useState } from 'react';
 import React from 'react';
 
-export const SearchContext = React.createContext<{
-  searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-}>({
-  searchValue: '',
-  setSearchValue: () => {},
-});
+// export const SearchContext = React.createContext<{
+//   searchValue: string;
+//   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+// }>({
+//   searchValue: '',
+//   setSearchValue: () => {},
+// });
 
 function App() {
 
-  const [searchValue, setSearchValue] = useState('');
+  // const [searchValue, setSearchValue] = useState('');
 
   return (
     <div className="wrapper">
-      <SearchContext.Provider value={{searchValue, setSearchValue}}>
+      {/* <SearchContext.Provider value={{searchValue, setSearchValue}}> */}
         <Header/>
 
         <div className="content">
@@ -26,7 +26,7 @@ function App() {
             <Routing/>
           </div>
         </div>
-      </SearchContext.Provider>
+      {/* </SearchContext.Provider> */}
     </div>
   );
 }

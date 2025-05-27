@@ -20,10 +20,17 @@ export const Home = () => {
 
     const sortBy = sortType.sortProperty.replace('-', '');
     const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-    const category = categoryId > 0 ? `category=${categoryId}` : ''
-    const search = searchValue ? `&search=${searchValue}` : ''
 
-    axios.get(`https://682df928746f8ca4a47b67c3.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`)
+    const params = {
+    page: currentPage,
+    limit: 4,
+    sortBy,
+    order,
+    ...(categoryId > 0 && { category: categoryId }),
+    ...(searchValue && { search: searchValue })
+  };
+
+    axios.get(`https://682df928746f8ca4a47b67c3.mockapi.io/items`, { params })
       .then((response) => {
         setItems(response.data);
         setIsLoading(false);

@@ -1,32 +1,48 @@
 import s from './Search.module.scss';
 import searchSvg from '../../../assets/img/search.svg';
 import clearIconSvg from '../../../assets/img/close.svg';
-import { useContext } from 'react';
-import { SearchContext } from '@/app/App';
-
+import { useEffect, useRef, useState } from 'react';
+import { useAppDispatch, useAppSelector, useDebounce } from '@/common/hooks';
+import { selectSearch, setSearch } from '@/app/redux/slices/filterSlice';
 
 export const Search = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch()
 
-  const { searchValue, setSearchValue } = useContext(SearchContext)
+  const searchValue = useAppSelector(selectSearch)
+  const [localValue, setLocalValue] = useState(searchValue)
+
+  const debounceValue = useDebounce(localValue)
+
+  useEffect(() => {
+    dispatch(setSearch({value: debounceValue}));
+  }, [debounceValue]);
+  
+  useEffect(() => {
+    setLocalValue(searchValue);
+  }, [searchValue]);
   
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+    setLocalValue(e.target.value);
   };
 
   const handleClearInput = () => {
-    setSearchValue('');
+    setLocalValue('')
+    dispatch(setSearch({value: ''}))
+    inputRef.current?.focus()
   };
 
   return (
     <div className={s.root}>
       <img className={s.icon} width="32" src={searchSvg} alt="Search" />
       <input
-        value={searchValue}
+        ref={inputRef}
+        value={localValue}
         onChange={handleSearch}
         className={s.search}
         placeholder="Поиск пиццы..."
       />
-      {searchValue && (
+      {localValue && (
         <img
           onClick={handleClearInput}
           className={s.close}

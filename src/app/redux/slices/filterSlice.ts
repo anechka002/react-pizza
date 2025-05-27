@@ -4,11 +4,13 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface FilterState {
   categoryId: number
   sort: SortType
+  search: string
 }
 
 const initialState: FilterState = {
   categoryId: 0,
   sort: {name: 'популярности', sortProperty: 'rating'},
+  search: '',
 }
 
 export const filterSlice = createSlice({
@@ -16,7 +18,8 @@ export const filterSlice = createSlice({
   initialState,
   selectors: {
     selectCategoryId: (state: FilterState) => state.categoryId,
-    selectSort: (state: FilterState) => state.sort
+    selectSort: (state: FilterState) => state.sort,
+    selectSearch: (state: FilterState) => state.search,
   },
   reducers: (create) => ({
     setCategoryId: create.reducer<{id: number}>((state, action) => {
@@ -25,11 +28,14 @@ export const filterSlice = createSlice({
     setSort: create.reducer<SortType>((state, action) => {
       state.sort = action.payload
     }),
+    setSearch: create.reducer<{value: string}>((state, action) => {
+      state.search = action.payload.value
+    }),
   }) 
 })
 export default filterSlice.reducer
 
-export const { setCategoryId, setSort } = filterSlice.actions
+export const { setCategoryId, setSort, setSearch } = filterSlice.actions
 
-export const { selectCategoryId, selectSort } = filterSlice.selectors
+export const { selectCategoryId, selectSort, selectSearch } = filterSlice.selectors
 
