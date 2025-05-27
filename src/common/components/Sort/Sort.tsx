@@ -7,10 +7,13 @@ type Props = {
   value: SortType
 }
 
-const list: SortType[] = [
-  {name: 'популярности', sortProperty: 'rating'},
-  {name: 'цене', sortProperty: 'price'},
-  {name: 'алфавиту', sortProperty: 'title'},
+export const sortList: SortType[] = [
+  {name: 'популярности ⬇️', sortProperty: 'rating'},
+  {name: 'популярности ⬆️', sortProperty: '-rating'},
+  {name: 'цене ⬇️', sortProperty: 'price'},
+  {name: 'цене ⬆️', sortProperty: '-price'},
+  {name: 'алфавиту ⬇️', sortProperty: 'title'},
+  {name: 'алфавиту ⬆️', sortProperty: '-title'},
 ]
 
 export const Sort = ({value}: Props) => {
@@ -45,7 +48,7 @@ export const Sort = ({value}: Props) => {
       {isOpenPopup && (
         <div className="sort__popup">
           <ul>
-            {list.map((obj, i) => (
+            {sortList.map((obj, i) => (
               <li
                 key={i}
                 onClick={() => handleSelectedItem(obj)}
