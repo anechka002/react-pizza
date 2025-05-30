@@ -1,4 +1,6 @@
-import type { PizzasType } from '@/common/types/types';
+import { addItem } from '@/app/redux/slices/cartSlice';
+import { useAppDispatch, useAppSelector } from '@/common/hooks';
+import type { CartItemType, PizzasType, TypeName } from '@/common/types/types';
 import { useState } from 'react';
 
 type Props = {
@@ -6,11 +8,35 @@ type Props = {
 };
 
 export const PizzaBlock = ({ pizza }: Props) => {
-  const { title, price, imageUrl, sizes, types } = pizza;
+  const { id, title, price, imageUrl, sizes, types } = pizza;
 
-  const typeName = ['тонкое', 'традиционное'];
+  const typeName: TypeName[] = ['тонкое', 'традиционное'];
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
+
+  const dispatch = useAppDispatch()
+
+  const countCartItem = useAppSelector((state) => 
+    state.cart.items.find((el) => 
+      el.id === id
+      // el.size === sizes[activeSize] &&
+      // el.type === typeName[activeType]
+  ));
+
+  const addedCount = countCartItem ? countCartItem.count : 0;
+
+  const handleAddProduct = () => {
+    const item: CartItemType = {
+      id,
+      title,
+      price,
+      imageUrl,
+      size: sizes[activeSize],
+      type: typeName[activeType],
+      count: 0
+    }
+    dispatch(addItem(item))
+  }
 
   return (
     <div className="pizza-block-wrapper">
@@ -43,7 +69,7 @@ export const PizzaBlock = ({ pizza }: Props) => {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {price} ₽</div>
-          <button className="button button--outline button--add">
+          <button onClick={handleAddProduct} className="button button--outline button--add">
             <svg
               width="12"
               height="12"
@@ -57,7 +83,7 @@ export const PizzaBlock = ({ pizza }: Props) => {
               />
             </svg>
             <span>Добавить</span>
-            <i>0</i>
+            {addedCount > 0 && <i>{addedCount}</i>}
           </button>
         </div>
       </div>

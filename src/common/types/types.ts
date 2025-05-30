@@ -13,3 +13,15 @@ export type SortType = {
   name: string
   sortProperty: 'rating' | 'price' | 'title' | '-rating' | '-price' | '-title'
 }
+
+export type TypeName = 'тонкое' | 'традиционное'
+
+export type CartItemType = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  size: number
+  type: TypeName,
+  count: number
+}
