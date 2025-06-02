@@ -1,7 +1,7 @@
 import {
   selectCategoryId,
   selectCurrentPage,
-  selectSearch,
+  selectSearchValue,
   selectSort,
   setFilters,
 } from '@/app/redux/slices/filterSlice';
@@ -35,7 +35,7 @@ export const Home = () => {
 
   const categoryId = useAppSelector(selectCategoryId);
   const sortType = useAppSelector(selectSort);
-  const searchValue = useAppSelector(selectSearch);
+  const searchValue = useAppSelector(selectSearchValue);
   const currentPage = useAppSelector(selectCurrentPage);
 
   const fetchPizzas = () => {

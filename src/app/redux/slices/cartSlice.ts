@@ -59,3 +59,4 @@ export const { addItem, removeItem, minusItem, clearItems} = cartSlice.actions
 
 export const { selectTotalPrice, selectItems, selectTotalCount } = cartSlice.selectors
 
+export const selectCartItem = (id: number) => (state: {cart: CartState}) => state.cart.items.find((el) => el.id === id)

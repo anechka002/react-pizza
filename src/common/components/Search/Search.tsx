@@ -3,19 +3,19 @@ import searchSvg from '../../../assets/img/search.svg';
 import clearIconSvg from '../../../assets/img/close.svg';
 import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector, useDebounce } from '@/common/hooks';
-import { selectSearch, setSearch } from '@/app/redux/slices/filterSlice';
+import { selectSearchValue, setSearchValue } from '@/app/redux/slices/filterSlice';
 
 export const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch()
 
-  const searchValue = useAppSelector(selectSearch)
+  const searchValue = useAppSelector(selectSearchValue)
   const [localValue, setLocalValue] = useState(searchValue)
 
   const debounceValue = useDebounce(localValue)
 
   useEffect(() => {
-    dispatch(setSearch({value: debounceValue}));
+    dispatch(setSearchValue({value: debounceValue}));
   }, [debounceValue]);
   
   useEffect(() => {
@@ -28,7 +28,7 @@ export const Search = () => {
 
   const handleClearInput = () => {
     setLocalValue('')
-    dispatch(setSearch({value: ''}))
+    dispatch(setSearchValue({value: ''}))
     inputRef.current?.focus()
   };
 

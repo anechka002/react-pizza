@@ -1,4 +1,4 @@
-import { addItem } from '@/app/redux/slices/cartSlice';
+import { addItem, selectCartItem } from '@/app/redux/slices/cartSlice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import type { CartItemType, PizzasType, TypeName } from '@/common/types/types';
 import { useState } from 'react';
@@ -16,12 +16,7 @@ export const PizzaBlock = ({ pizza }: Props) => {
 
   const dispatch = useAppDispatch()
 
-  const countCartItem = useAppSelector((state) => 
-    state.cart.items.find((el) => 
-      el.id === id
-      // el.size === sizes[activeSize] &&
-      // el.type === typeName[activeType]
-  ));
+  const countCartItem = useAppSelector(selectCartItem(id));
 
   const addedCount = countCartItem ? countCartItem.count : 0;
 
