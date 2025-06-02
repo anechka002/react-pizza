@@ -25,3 +25,14 @@ export type CartItemType = {
   type: TypeName,
   count: number
 }
+
+export interface PizzasParams {
+  search?: string;
+  category?: number;
+  page: number;
+  limit: number;
+  sortBy: string;
+  order: string;
+}
+
+export type LoadingType = 'idle' | 'loading' | 'succeeded' | 'failed'
