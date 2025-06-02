@@ -15,7 +15,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { useEffect, useRef } from 'react';
 import qs from 'qs';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { sortList } from '@/common/components/Sort/Sort';
 import {
   fetchPizza,
@@ -98,7 +98,7 @@ export const Home = () => {
   }, [categoryId, sortType, searchValue, currentPage]);
 
   const pizzas = items?.map((item) => (
-    <PizzaBlock key={item.id} pizza={item} />
+    <Link key={item.id} to={`/pizza/${item.id}`}><PizzaBlock pizza={item} /></Link>
   ));
   const skeletons = [...new Array(6)].map((_, i) => <PizzaSkeleton key={i} />);
 

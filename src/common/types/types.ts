@@ -1,5 +1,5 @@
 export type PizzasType = {
-  id: number;
+  id: string;
   imageUrl: string;
   title: string;
   types: number[];
@@ -17,7 +17,7 @@ export type SortType = {
 export type TypeName = 'тонкое' | 'традиционное'
 
 export type CartItemType = {
-  id: number;
+  id: string;
   title: string;
   price: number;
   imageUrl: string;

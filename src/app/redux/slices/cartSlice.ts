@@ -38,13 +38,13 @@ export const cartSlice = createSlice({
         return sum + (item.price * item.count)
       }, 0)
     }),
-    minusItem: create.reducer<{id: number}>((state, action) => {
+    minusItem: create.reducer<{id: string}>((state, action) => {
       const findItem = state.items.find((obj) => obj.id === action.payload.id)
       if (findItem) {
         findItem.count -= 1
       }
     }),
-    removeItem: create.reducer<{id: number}>((state, action) => {
+    removeItem: create.reducer<{id: string}>((state, action) => {
       state.items = state.items.filter((el) => el.id !== action.payload.id)
     }),
     clearItems: create.reducer((state) => {
@@ -59,4 +59,4 @@ export const { addItem, removeItem, minusItem, clearItems} = cartSlice.actions
 
 export const { selectTotalPrice, selectItems, selectTotalCount } = cartSlice.selectors
 
-export const selectCartItem = (id: number) => (state: {cart: CartState}) => state.cart.items.find((el) => el.id === id)
+export const selectCartItem = (id: string) => (state: {cart: CartState}) => state.cart.items.find((el) => el.id === id)
