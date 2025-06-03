@@ -97,9 +97,7 @@ export const Home = () => {
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  const pizzas = items?.map((item) => (
-    <Link key={item.id} to={`/pizza/${item.id}`}><PizzaBlock pizza={item} /></Link>
-  ));
+  const pizzas = items?.map((item) => (<PizzaBlock key={item.id} pizza={item} />));
   const skeletons = [...new Array(6)].map((_, i) => <PizzaSkeleton key={i} />);
 
   return (

@@ -13,7 +13,12 @@ export const CartItem = ({item}: Props) => {
     dispatch(addItem(item))
   }
   const handleMinusPizza = () => {
-    dispatch(minusItem({id: item.id}))
+    if(item.count > 0) {
+      dispatch(minusItem({id: item.id}))
+      if(item.count === 1) {
+        dispatch(removeItem({id: item.id}))
+      }
+    }
   }
   const handleRemovePizza = () => {
     if(window.confirm('Ты действительно хочешь удалить пиццу?')) {

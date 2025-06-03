@@ -2,6 +2,7 @@ import { addItem, selectCartItem } from '@/app/redux/slices/cartSlice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import type { CartItemType, PizzasType, TypeName } from '@/common/types/types';
 import { useState } from 'react';
+import { Link } from 'react-router';
 
 type Props = {
   pizza: PizzasType;
@@ -36,8 +37,10 @@ export const PizzaBlock = ({ pizza }: Props) => {
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-        <h4 className="pizza-block__title">{title}</h4>
+        <Link  to={`/pizza/${id}`}>
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+          <h4 className="pizza-block__title">{title}</h4>
+        </Link>  
         <div className="pizza-block__selector">
           <ul>
             {types.map((type) => (
