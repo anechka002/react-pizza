@@ -15,19 +15,20 @@ import {
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { useEffect, useRef } from 'react';
 import qs from 'qs';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { sortList } from '@/common/components/Sort/Sort';
 import {
   fetchPizza,
   selectPizzas,
   selectStatus,
 } from '@/app/redux/slices/pizzasSlice';
+import { Status } from '@/common/enum';
 
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isSearch = useRef(false);
-  const isMounted = useRef(false);
+  const isSearch = useRef<boolean>(false);
+  const isMounted = useRef<boolean>(false);
 
   const items = useAppSelector(selectPizzas);
   const status = useAppSelector(selectStatus);
@@ -76,6 +77,7 @@ export const Home = () => {
       const params = qs.parse(window.location.search.substring(1));
 
       const list = sortList.find((el) => el.sortProperty === params.sortType);
+
       dispatch(
         setFilters({
           currentPage: Number(params.currentPage),
@@ -108,7 +110,7 @@ export const Home = () => {
         <Sort value={sortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      {status === 'failed' ? (
+      {status === Status.ERROR ? (
         <div className="content__error-info">
           <h2>Произошла ошибка 😕</h2>
           <p>
@@ -118,7 +120,7 @@ export const Home = () => {
         </div>
       ) : (
         <div className="content__items">
-          {status === 'loading' ? skeletons : pizzas}
+          {status === Status.LOADING ? skeletons : pizzas}
         </div>
       )}
 

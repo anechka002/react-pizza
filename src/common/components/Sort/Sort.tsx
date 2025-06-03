@@ -1,4 +1,5 @@
 import { setSort } from '@/app/redux/slices/filterSlice';
+import { SortProperty } from '@/common/enum/enum';
 import { useAppDispatch } from '@/common/hooks';
 import type { SortType } from '@/common/types';
 import { useEffect, useRef, useState } from 'react'
@@ -8,16 +9,16 @@ type Props = {
 }
 
 export const sortList: SortType[] = [
-  {name: 'популярности ⬇️', sortProperty: 'rating'},
-  {name: 'популярности ⬆️', sortProperty: '-rating'},
-  {name: 'цене ⬇️', sortProperty: 'price'},
-  {name: 'цене ⬆️', sortProperty: '-price'},
-  {name: 'алфавиту ⬇️', sortProperty: 'title'},
-  {name: 'алфавиту ⬆️', sortProperty: '-title'},
+  {name: 'популярности ⬇️', sortProperty: SortProperty.RATING_DESC},
+  {name: 'популярности ⬆️', sortProperty: SortProperty.RATING_ASC},
+  {name: 'цене ⬇️', sortProperty: SortProperty.PRICE_DESC},
+  {name: 'цене ⬆️', sortProperty: SortProperty.PRICE_ASC},
+  {name: 'алфавиту ⬇️', sortProperty: SortProperty.TITLE_DESC},
+  {name: 'алфавиту ⬆️', sortProperty: SortProperty.TITLE_ASC},
 ]
 
 export const Sort = ({value}: Props) => {
-  const [isOpenPopup, setIsOpenPopup] = useState(false)
+  const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false)
   const sortRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

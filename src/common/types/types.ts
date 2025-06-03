@@ -1,3 +1,5 @@
+import type { SortProperty } from "../enum/enum";
+
 export type PizzasType = {
   id: string;
   imageUrl: string;
@@ -11,10 +13,12 @@ export type PizzasType = {
 
 export type SortType = {
   name: string
-  sortProperty: 'rating' | 'price' | 'title' | '-rating' | '-price' | '-title'
+  sortProperty: SortProperty
 }
 
 export type TypeName = 'тонкое' | 'традиционное'
+
+export type CategoriesType = 'Все' | 'Мясные' |'Вегетарианская' | 'Гриль' | 'Острые' | 'Закрытые'
 
 export type CartItemType = {
   id: string;
@@ -34,5 +38,3 @@ export interface PizzasParams {
   sortBy: string;
   order: string;
 }
-
-export type LoadingType = 'idle' | 'loading' | 'succeeded' | 'failed'

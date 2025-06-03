@@ -1,7 +1,8 @@
+import { SortProperty } from '@/common/enum/enum'
 import type { SortType } from '@/common/types'
 import { createSlice } from '@reduxjs/toolkit'
 
-export interface FilterState {
+interface FilterState {
   categoryId: number
   sort: SortType
   searchValue: string
@@ -10,7 +11,7 @@ export interface FilterState {
 
 const initialState: FilterState = {
   categoryId: 0,
-  sort: {name: 'популярности', sortProperty: 'rating'},
+  sort: {name: 'популярности', sortProperty: SortProperty.RATING_DESC},
   searchValue: '',
   currentPage: 1,
 }
@@ -19,10 +20,10 @@ export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   selectors: {
-    selectCategoryId: (state: FilterState) => state.categoryId,
-    selectSort: (state: FilterState) => state.sort,
-    selectSearchValue: (state: FilterState) => state.searchValue,
-    selectCurrentPage: (state: FilterState) => state.currentPage,
+    selectCategoryId: state => state.categoryId,
+    selectSort: state => state.sort,
+    selectSearchValue: state=> state.searchValue,
+    selectCurrentPage: state => state.currentPage,
   },
   reducers: (create) => ({
     setCategoryId: create.reducer<{id: number}>((state, action) => {

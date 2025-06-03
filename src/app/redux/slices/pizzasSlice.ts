@@ -1,15 +1,16 @@
-import type { LoadingType, PizzasParams, PizzasType } from '@/common/types'
+import type { PizzasParams, PizzasType } from '@/common/types'
 import { pizzasApi } from '../api/pizzasApi'
 import { createAppSlice } from '@/common/utils'
+import { Status } from '@/common/enum'
 
-export interface PizzaState {
+interface PizzaState {
   items: PizzasType[]
-  status: LoadingType
+  status: Status
 }
 
 const initialState: PizzaState = {
   items: [],
-  status: 'idle' as LoadingType,
+  status: Status.IDLE,
 }
 
 export const pizzasSlice = createAppSlice({
@@ -34,15 +35,15 @@ export const pizzasSlice = createAppSlice({
       }
     }, {
       pending: (state) => {
-        state.status = 'loading'
+        state.status = Status.LOADING
         state.items = []
       },
       fulfilled: (state, action) => {
         state.items = action.payload
-        state.status = 'succeeded'
+        state.status = Status.SUCCESS
       },
       rejected: (state) => {
-        state.status = 'failed'
+        state.status = Status.ERROR
         state.items = []
       }
     }),

@@ -12,8 +12,8 @@ export const PizzaBlock = ({ pizza }: Props) => {
   const { id, title, price, imageUrl, sizes, types } = pizza;
 
   const typeName: TypeName[] = ['тонкое', 'традиционное'];
-  const [activeType, setActiveType] = useState(0);
-  const [activeSize, setActiveSize] = useState(0);
+  const [activeType, setActiveType] = useState<number>(0);
+  const [activeSize, setActiveSize] = useState<number>(0);
 
   const dispatch = useAppDispatch()
 

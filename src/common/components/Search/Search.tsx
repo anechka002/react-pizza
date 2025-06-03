@@ -10,7 +10,7 @@ export const Search = () => {
   const dispatch = useAppDispatch()
 
   const searchValue = useAppSelector(selectSearchValue)
-  const [localValue, setLocalValue] = useState(searchValue)
+  const [localValue, setLocalValue] = useState<string>(searchValue)
 
   const debounceValue = useDebounce(localValue)
 

@@ -1,5 +1,6 @@
 import { setCategoryId } from "@/app/redux/slices/filterSlice";
 import { useAppDispatch } from "@/common/hooks";
+import type { CategoriesType } from "@/common/types";
 
 type Props = {
   value: number;
@@ -7,7 +8,7 @@ type Props = {
 
 export const Categories = ({value}: Props) => {
   
-  const categories = [
+  const categories: CategoriesType[] = [
     'Все',
     'Мясные',
     'Вегетарианская',
