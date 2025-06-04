@@ -1,12 +1,13 @@
 import { setCategoryId } from "@/app/redux/slices/filterSlice";
 import { useAppDispatch } from "@/common/hooks";
 import type { CategoriesType } from "@/common/types";
+import React from "react";
 
 type Props = {
   value: number;
 }
 
-export const Categories = ({value}: Props) => {
+export const Categories = React.memo(({value}: Props) => {
   
   const categories: CategoriesType[] = [
     'Все',
@@ -38,4 +39,4 @@ export const Categories = ({value}: Props) => {
       </ul>
     </div>
   );
-};
+})

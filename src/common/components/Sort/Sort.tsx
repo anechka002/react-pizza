@@ -2,7 +2,9 @@ import { setSort } from '@/app/redux/slices/filterSlice';
 import { SortProperty } from '@/common/enum';
 import { useAppDispatch } from '@/common/hooks';
 import type { SortType } from '@/common/types';
+import React from 'react';
 import { useEffect, useRef, useState } from 'react'
+// import { useWhyDidYouUpdate } from 'ahooks';
 
 type Props = {
   value: SortType
@@ -17,9 +19,11 @@ export const sortList: SortType[] = [
   {name: 'алфавиту ⬆️', sortProperty: SortProperty.TITLE_ASC},
 ]
 
-export const Sort = ({value}: Props) => {
+export const Sort = React.memo(({value}: Props) => {
+  // useWhyDidYouUpdate('Sort', {value});
   const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false)
   const sortRef = useRef<HTMLDivElement>(null)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     // console.log('mount')
@@ -37,8 +41,6 @@ export const Sort = ({value}: Props) => {
       document.body.removeEventListener('click', handleOutsideClick);
     };
   }, [])
-
-  const dispatch = useAppDispatch()
 
   const handleSelectedItem = (value: SortType) => {
     dispatch(setSort(value))
@@ -80,4 +82,4 @@ export const Sort = ({value}: Props) => {
       )}     
     </div>
   );
-};
+})
