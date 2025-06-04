@@ -1,4 +1,5 @@
 import type { CartItemType } from '@/common/types'
+import { calcTotalPrice, getCartFromLS } from '@/common/utils'
 import { createSlice } from '@reduxjs/toolkit'
 
 interface CartState {
@@ -6,9 +7,11 @@ interface CartState {
   items: CartItemType[]
 }
 
+const {items, totalPrice} = getCartFromLS()
+
 const initialState: CartState = {
-  totalPrice: 0,
-  items: []
+  totalPrice: totalPrice,
+  items: items
 }
 
 export const cartSlice = createSlice({
@@ -32,9 +35,7 @@ export const cartSlice = createSlice({
       } else {
         state.items.push({ ...action.payload, count: 1 })
       }
-      state.totalPrice = state.items.reduce((sum, item) => {
-        return sum + (item.price * item.count)
-      }, 0)
+      state.totalPrice = calcTotalPrice(state.items)
     }),
 
     minusItem: create.reducer<{id: string}>((state, action) => {
@@ -42,16 +43,12 @@ export const cartSlice = createSlice({
       if (findItem) {
         findItem.count -= 1
       }
-      state.totalPrice = state.items.reduce((sum, item) => {
-        return sum + (item.price * item.count)
-      }, 0)
+      state.totalPrice = calcTotalPrice(state.items)
     }),
 
     removeItem: create.reducer<{id: string}>((state, action) => {
       state.items = state.items.filter((el) => el.id !== action.payload.id)
-      state.totalPrice = state.items.reduce((sum, item) => {
-        return sum + (item.price * item.count)
-      }, 0)
+      state.totalPrice = calcTotalPrice(state.items)
     }),
 
     clearItems: create.reducer((state) => {

@@ -3,14 +3,25 @@ import logoSvg from '../../../assets/img/pizza-logo.svg'
 import { PATH } from '@/common/routing/Routing';
 import { Search } from '../Search/Search';
 import { useAppSelector } from '@/common/hooks';
-import { selectTotalCount, selectTotalPrice } from '@/app/redux/slices/cartSlice';
+import { selectItems, selectTotalCount, selectTotalPrice } from '@/app/redux/slices/cartSlice';
+import { useEffect, useRef } from 'react';
 
 export const Header = () => {
 
   const totalPrice = useAppSelector(selectTotalPrice)
   const totalCount = useAppSelector(selectTotalCount)
+  const items = useAppSelector(selectItems)
+  const isMounted = useRef(false)
 
   const location = useLocation()
+
+  useEffect(() => {
+    if(isMounted.current) {
+      const json = localStorage.setItem('cart', JSON.stringify(items))
+      console.log(json)
+    }
+    isMounted.current = true
+  }, [items])
 
   return (
     <div className="header">
@@ -24,7 +35,9 @@ export const Header = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </div>
-        <Search/>
+
+        {location.pathname !== PATH.CART && <Search/>}
+
         <div className="header__cart">
           {location.pathname !== PATH.CART && (
             <Link to={PATH.CART} className="button button--cart">
