@@ -49,6 +49,9 @@ export const cartSlice = createSlice({
 
     removeItem: create.reducer<{id: string}>((state, action) => {
       state.items = state.items.filter((el) => el.id !== action.payload.id)
+      state.totalPrice = state.items.reduce((sum, item) => {
+        return sum + (item.price * item.count)
+      }, 0)
     }),
 
     clearItems: create.reducer((state) => {

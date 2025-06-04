@@ -1,5 +1,5 @@
 import { setSort } from '@/app/redux/slices/filterSlice';
-import { SortProperty } from '@/common/enum/enum';
+import { SortProperty } from '@/common/enum';
 import { useAppDispatch } from '@/common/hooks';
 import type { SortType } from '@/common/types';
 import { useEffect, useRef, useState } from 'react'

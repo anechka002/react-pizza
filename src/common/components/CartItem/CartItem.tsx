@@ -13,12 +13,7 @@ export const CartItem = ({item}: Props) => {
     dispatch(addItem(item))
   }
   const handleMinusPizza = () => {
-    if(item.count > 0) {
       dispatch(minusItem({id: item.id}))
-      if(item.count === 1) {
-        dispatch(removeItem({id: item.id}))
-      }
-    }
   }
   const handleRemovePizza = () => {
     if(window.confirm('Ты действительно хочешь удалить пиццу?')) {
@@ -40,7 +35,10 @@ export const CartItem = ({item}: Props) => {
         <p>{item.type} тесто, {item.size} см.</p>
       </div>
       <div className="cart__item-count">
-        <div onClick={handleMinusPizza} className="button button--outline button--circle cart__item-count-minus">
+        <button 
+          disabled={item.count === 1}
+          onClick={handleMinusPizza} 
+          className="button button--outline button--circle cart__item-count-minus">
           <svg
             width="10"
             height="10"
@@ -57,9 +55,11 @@ export const CartItem = ({item}: Props) => {
               fill="#EB5A1E"
             ></path>
           </svg>
-        </div>
+        </button>
         <b>{item.count}</b>
-        <button onClick={handlePlusPizza} className="button button--outline button--circle cart__item-count-plus">
+        <button 
+          onClick={handlePlusPizza} 
+          className="button button--outline button--circle cart__item-count-plus">
           <svg
             width="10"
             height="10"
