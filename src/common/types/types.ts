@@ -9,6 +9,7 @@ export type PizzasType = {
   price: number;
   category: number;
   rating: number;
+  desc: string;
 }
 
 export type SortType = {

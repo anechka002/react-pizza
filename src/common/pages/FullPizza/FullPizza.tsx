@@ -3,6 +3,7 @@ import type { PizzasType } from "@/common/types"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
+import s from './FullPizza.module.scss'
 
 export const FullPizza = () => {
 
@@ -30,10 +31,10 @@ export const FullPizza = () => {
   }
 
   return (
-    <div>
-      <img src={pizza.imageUrl} alt="pizza" />
-      <h2>{pizza.title}</h2>
-      <h4>{pizza.price} ₽</h4>
+    <div className={s.root}>
+      <img className={s.img} src={pizza.imageUrl} alt="pizza" />
+      <h2 className={s.title}>{pizza.title}</h2>
+      <p className={s.desc}>{pizza.desc}</p>
     </div>
   )
 }
