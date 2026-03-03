@@ -3,7 +3,6 @@ import './scss/app.scss';
 import { Routing } from '@/common/routing';
 
 function App() {
-
   return (
     <div className="wrapper">
         <Header/>

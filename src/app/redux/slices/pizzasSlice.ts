@@ -30,7 +30,7 @@ export const pizzasSlice = createAppSlice({
       try {
         const res = await pizzasApi.getPizzas(params)
         return res.data
-      } catch (error) {
+      } catch {
         return thunkAPI.rejectWithValue(null)
       }
     }, {
@@ -54,4 +54,3 @@ export const pizzasReducer = pizzasSlice.reducer
 export const { fetchPizza } = pizzasSlice.actions
 
 export const { selectPizzas, selectStatus } = pizzasSlice.selectors
-
