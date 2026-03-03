@@ -1,44 +1,68 @@
+import { useEffect, type ReactNode } from 'react';
 import s from './Modal.module.scss';
 
-type Props = {
-  title: string
-  description: string
+type ModalProps = {
   onClose: () => void
-  onConfirm: () => void
-  confirmText?: string
-  cancelText?: string
+  children: ReactNode
+  labelledBy?: string
 }
 
-export const Modal = ({
-  title,
-  description,
-  onClose,
-  onConfirm,
-  confirmText = 'Подтвердить',
-  cancelText = 'Отмена',
-}: Props) => {
+type SectionProps = {
+  children: ReactNode
+}
+
+type TitleProps = SectionProps & {
+  id?: string
+}
+
+const ModalRoot = ({ onClose, children, labelledBy }: ModalProps) => {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
   return (
     <div className={s.overlay} role="presentation" onClick={onClose}>
       <div
         className={s.content}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-title"
+        aria-labelledby={labelledBy}
         onClick={(event) => event.stopPropagation()}
       >
-        <h3 id="modal-title" className={s.title}>
-          {title}
-        </h3>
-        <p className={s.description}>{description}</p>
-        <div className={s.actions}>
-          <button type="button" onClick={onClose} className="button button--outline">
-            {cancelText}
-          </button>
-          <button type="button" onClick={onConfirm} className="button">
-            {confirmText}
-          </button>
-        </div>
+        {children}
       </div>
     </div>
   );
 };
+
+const ModalTitle = ({ id, children }: TitleProps) => {
+  return (
+    <h3 id={id} className={s.title}>
+      {children}
+    </h3>
+  );
+};
+
+const ModalDescription = ({ children }: SectionProps) => {
+  return <p className={s.description}>{children}</p>;
+};
+
+const ModalActions = ({ children }: SectionProps) => {
+  return <div className={s.actions}>{children}</div>;
+};
+
+export const Modal = Object.assign(ModalRoot, {
+  Title: ModalTitle,
+  Description: ModalDescription,
+  Actions: ModalActions,
+});

@@ -113,14 +113,22 @@ export const CartItem = ({item}: Props) => {
       </div>
 
       {isRemoveModalOpen && (
-        <Modal
-          title="Удалить пиццу из корзины?"
-          description={`${item.title} будет полностью удалена из заказа.`}
-          onClose={handleCloseModal}
-          onConfirm={handleConfirmRemove}
-          confirmText="Удалить"
-          cancelText="Отмена"
-        />
+        <Modal onClose={handleCloseModal} labelledBy={`remove-item-title-${item.id}`}>
+          <Modal.Title id={`remove-item-title-${item.id}`}>
+            Удалить пиццу из корзины?
+          </Modal.Title>
+          <Modal.Description>
+            {item.title} будет полностью удалена из заказа.
+          </Modal.Description>
+          <Modal.Actions>
+            <button type="button" onClick={handleCloseModal} className="button button--outline">
+              Отмена
+            </button>
+            <button type="button" onClick={handleConfirmRemove} className="button">
+              Удалить
+            </button>
+          </Modal.Actions>
+        </Modal>
       )}
     </>
   );
