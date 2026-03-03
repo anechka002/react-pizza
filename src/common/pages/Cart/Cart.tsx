@@ -1,30 +1,25 @@
 import { clearItems, selectItems, selectTotalCount, selectTotalPrice } from "@/app/redux/slices/cartSlice";
 import { CartEmpty, CartItem, Modal } from "@/common/components";
-import { useAppDispatch, useAppSelector } from "@/common/hooks";
+import { useAppDispatch, useAppSelector, useModal } from "@/common/hooks";
 import { PATH } from "@/common/routing/Routing";
-import { useState } from "react";
 import { Link } from "react-router";
 
 export const Cart = () => {
 
   const dispatch = useAppDispatch()
-  const [isClearModalOpen, setIsClearModalOpen] = useState(false);
+  const { isOpen: isClearModalOpen, open: openClearModal, close: closeClearModal } = useModal()
 
   const cartItems = useAppSelector(selectItems)
   const totalPrice = useAppSelector(selectTotalPrice)
   const totalCount = useAppSelector(selectTotalCount)
 
   const handleClearCart = () => {
-    setIsClearModalOpen(true);
+    openClearModal()
   }
 
   const handleConfirmClearCart = () => {
     dispatch(clearItems())
-    setIsClearModalOpen(false);
-  }
-
-  const handleCloseModal = () => {
-    setIsClearModalOpen(false);
+    closeClearModal()
   }
 
   if(!totalPrice) {
@@ -157,13 +152,13 @@ export const Cart = () => {
       </div>
 
       {isClearModalOpen && (
-        <Modal onClose={handleCloseModal} labelledBy="clear-cart-title">
+        <Modal onClose={closeClearModal} labelledBy="clear-cart-title">
           <Modal.Title id="clear-cart-title">Очистить корзину?</Modal.Title>
           <Modal.Description>
             Все выбранные пиццы будут удалены из заказа.
           </Modal.Description>
           <Modal.Actions>
-            <button type="button" onClick={handleCloseModal} className="button button--outline">
+            <button type="button" onClick={closeClearModal} className="button button--outline">
               Отмена
             </button>
             <button type="button" onClick={handleConfirmClearCart} className="button">

@@ -1,8 +1,7 @@
 import { addItem, minusItem, removeItem } from "@/app/redux/slices/cartSlice";
-import { useAppDispatch } from "@/common/hooks";
+import { useAppDispatch, useModal } from "@/common/hooks";
 import { Modal } from "@/common/components/Modal/Modal";
 import type { CartItemType } from "@/common/types";
-import { useState } from "react";
 
 type Props = {
   item: CartItemType
@@ -10,7 +9,7 @@ type Props = {
 
 export const CartItem = ({item}: Props) => {
   const dispatch = useAppDispatch()
-  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
+  const { isOpen: isRemoveModalOpen, open: openRemoveModal, close: closeRemoveModal } = useModal()
 
   const handlePlusPizza = () => {
     dispatch(addItem(item))
@@ -19,14 +18,11 @@ export const CartItem = ({item}: Props) => {
       dispatch(minusItem({id: item.id}))
   }
   const handleRemovePizza = () => {
-    setIsRemoveModalOpen(true);
+    openRemoveModal()
   }
   const handleConfirmRemove = () => {
     dispatch(removeItem({id: item.id}))
-    setIsRemoveModalOpen(false);
-  }
-  const handleCloseModal = () => {
-    setIsRemoveModalOpen(false);
+    closeRemoveModal()
   }
 
   return (
@@ -113,7 +109,7 @@ export const CartItem = ({item}: Props) => {
       </div>
 
       {isRemoveModalOpen && (
-        <Modal onClose={handleCloseModal} labelledBy={`remove-item-title-${item.id}`}>
+        <Modal onClose={closeRemoveModal} labelledBy={`remove-item-title-${item.id}`}>
           <Modal.Title id={`remove-item-title-${item.id}`}>
             Удалить пиццу из корзины?
           </Modal.Title>
@@ -121,7 +117,7 @@ export const CartItem = ({item}: Props) => {
             {item.title} будет полностью удалена из заказа.
           </Modal.Description>
           <Modal.Actions>
-            <button type="button" onClick={handleCloseModal} className="button button--outline">
+            <button type="button" onClick={closeRemoveModal} className="button button--outline">
               Отмена
             </button>
             <button type="button" onClick={handleConfirmRemove} className="button">
