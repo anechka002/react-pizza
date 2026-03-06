@@ -17,14 +17,14 @@ export const FullPizza = () => {
       try {       
         const res = await axios.get(`https://682df928746f8ca4a47b67c3.mockapi.io/items/${id}`)
         setPizza(res.data)
-      } catch (error) {
+      } catch {
         alert('Ошибка при получении пиццы!')
         navigate(PATH.HOME)
       }
     }
 
     getPizza()
-  }, [])
+  }, [id, navigate])
 
   if(!pizza) {
     return 'Загрузка...'
