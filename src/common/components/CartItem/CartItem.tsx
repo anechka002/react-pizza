@@ -2,6 +2,7 @@ import { addItem, minusItem, removeItem } from "@/app/redux/slices/cartSlice";
 import { useAppDispatch, useModal } from "@/common/hooks";
 import { Modal } from "@/common/components/Modal/Modal";
 import type { CartItemType } from "@/common/types";
+import { getCartItemKey } from "@/common/utils";
 
 type Props = {
   item: CartItemType
@@ -10,19 +11,20 @@ type Props = {
 export const CartItem = ({item}: Props) => {
   const dispatch = useAppDispatch()
   const { isOpen: isRemoveModalOpen, open: openRemoveModal, close: closeRemoveModal } = useModal()
+  const cartItemKey = getCartItemKey(item)
 
   const handlePlusPizza = () => {
     dispatch(addItem(item))
   }
   const handleMinusPizza = () => {
-      dispatch(minusItem({id: item.id}))
+      dispatch(minusItem({id: cartItemKey}))
   }
   const handleRemovePizza = () => {
     openRemoveModal()
   }
   const handleConfirmRemove = () => {
-    dispatch(removeItem({id: item.id}))
     closeRemoveModal()
+    dispatch(removeItem({id: cartItemKey}))
   }
 
   return (
@@ -109,8 +111,8 @@ export const CartItem = ({item}: Props) => {
       </div>
 
       {isRemoveModalOpen && (
-        <Modal onClose={closeRemoveModal} labelledBy={`remove-item-title-${item.id}`}>
-          <Modal.Title id={`remove-item-title-${item.id}`}>
+        <Modal onClose={closeRemoveModal} labelledBy={`remove-item-title-${cartItemKey}`}>
+          <Modal.Title id={`remove-item-title-${cartItemKey}`}>
             Удалить пиццу из корзины?
           </Modal.Title>
           <Modal.Description>

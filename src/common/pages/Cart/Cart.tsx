@@ -2,6 +2,7 @@ import { clearItems, selectItems, selectTotalCount, selectTotalPrice } from "@/a
 import { CartEmpty, CartItem, Modal } from "@/common/components";
 import { useAppDispatch, useAppSelector, useModal } from "@/common/hooks";
 import { PATH } from "@/common/routing/Routing";
+import { getCartItemKey } from "@/common/utils";
 import { Link } from "react-router";
 
 export const Cart = () => {
@@ -18,8 +19,8 @@ export const Cart = () => {
   }
 
   const handleConfirmClearCart = () => {
-    dispatch(clearItems())
     closeClearModal()
+    dispatch(clearItems())
   }
 
   if(!totalPrice) {
@@ -106,7 +107,7 @@ export const Cart = () => {
         <div className="content__items">
 
           {cartItems.map((item) => (
-            <CartItem key={item.id} item={item} />
+            <CartItem key={getCartItemKey(item)} item={item} />
           ))}
 
         </div>

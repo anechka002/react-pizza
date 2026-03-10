@@ -17,7 +17,10 @@ export const PizzaBlock = ({ pizza }: Props) => {
 
   const dispatch = useAppDispatch()
 
-  const countCartItem = useAppSelector(selectCartItem(id));
+  const selectedType = typeName[activeType];
+  const selectedSize = sizes[activeSize];
+
+  const countCartItem = useAppSelector(selectCartItem(id, selectedType, selectedSize));
 
   const addedCount = countCartItem ? countCartItem.count : 0;
 
@@ -27,8 +30,8 @@ export const PizzaBlock = ({ pizza }: Props) => {
       title,
       price,
       imageUrl,
-      size: sizes[activeSize],
-      type: typeName[activeType],
+      size: selectedSize,
+      type: selectedType,
       count: 0
     }
     dispatch(addItem(item))

@@ -1,5 +1,5 @@
 import type { CartItemType } from '@/common/types'
-import { calcTotalPrice, getCartFromLS } from '@/common/utils'
+import { calcTotalPrice, getCartFromLS, getCartItemKey } from '@/common/utils'
 import { createSlice } from '@reduxjs/toolkit'
 
 interface CartState {
@@ -27,7 +27,7 @@ export const cartSlice = createSlice({
     addItem: create.reducer<CartItemType>((state, action) => {
 
       const findItem = state.items.find((obj) => {
-        return obj.id === action.payload.id
+        return getCartItemKey(obj) === getCartItemKey(action.payload)
       })
 
       if (findItem) {
@@ -39,7 +39,7 @@ export const cartSlice = createSlice({
     }),
 
     minusItem: create.reducer<{id: string}>((state, action) => {
-      const findItem = state.items.find((obj) => obj.id === action.payload.id)
+      const findItem = state.items.find((obj) => getCartItemKey(obj) === action.payload.id)
       if (findItem) {
         findItem.count -= 1
       }
@@ -47,7 +47,7 @@ export const cartSlice = createSlice({
     }),
 
     removeItem: create.reducer<{id: string}>((state, action) => {
-      state.items = state.items.filter((el) => el.id !== action.payload.id)
+      state.items = state.items.filter((el) => getCartItemKey(el) !== action.payload.id)
       state.totalPrice = calcTotalPrice(state.items)
     }),
 
@@ -64,4 +64,5 @@ export const { addItem, removeItem, minusItem, clearItems} = cartSlice.actions
 
 export const { selectTotalPrice, selectItems, selectTotalCount } = cartSlice.selectors
 
-export const selectCartItem = (id: string) => (state: {cart: CartState}) => state.cart.items.find((el) => el.id === id)
+export const selectCartItem = (id: string, type: CartItemType['type'], size: CartItemType['size']) =>
+  (state: {cart: CartState}) => state.cart.items.find((el) => getCartItemKey(el) === getCartItemKey({ id, type, size }))
